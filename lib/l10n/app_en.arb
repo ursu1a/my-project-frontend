@@ -1,0 +1,20 @@
+{
+   "appTitle": "Job Searcher",
+   "welcomeBack": "Welcome \nback!",
+   "continueFacebook": "Continue with Facebook",
+   "continueLinkedIn": "Continue with LinkedIn",   
+   "or": "or",
+   "createEmailAccount": "Create account with email",
+   "password": "Password",
+   "continueEmail": "Continue with email",
+   "validationFieldRequired": "This field is required",
+   "validationFieldIncorrectEmail": "Email is invalid",
+   "listRecommended": "Recommended",
+   "listApplied": "Applied",
+   "postOverview": "Oveview",
+   "postResponsibilities": "Responsibilities",
+   "postLocation": "Locations",
+   "postCompanyLocations": "Company locations",
+   "postApply": "Apply to this Post",
+   "postShareInfoText": "Your contact information is not shared."
+}

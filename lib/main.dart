@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:frontend/routes/home/SplashScreen.dart';
+import 'package:frontend/routes/auth/AuthSelect.dart';
+import 'package:frontend/routes/job/JobDetails.dart';
+import 'package:frontend/routes/job/JobList.dart';
+import './utils/constants.dart' as Constants;
+import 'routes/job/JobList.dart';
+import 'package:frontend/routes/home/SplashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,110 +18,82 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    Widget titleSection = Container(
-      padding: const EdgeInsets.all(32),
-      child: Row(
-        children: [
-          Expanded(
-            /*1*/
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /*2*/
-                Container(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: const Text(
-                    'Oeschinen Lake Campground',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Text(
-                  'Kandersteg, Switzerland',
-                  style: TextStyle(
-                    color: Colors.grey[500],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          /*3*/
-          Icon(
-            Icons.star,
-            color: Colors.red[500],
-          ),
-          const Text('41'),
-        ],
-      ),
-    );
-
-    Column _buildButtonColumn(Color color, IconData icon, String label) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color),
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: color,
-              ),
-            ),
-          ),
-        ],
-      );
-    }
-
-    Color color = Theme.of(context).primaryColor;
-
-    Widget buttonSection = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _buildButtonColumn(color, Icons.call, 'CALL'),
-        _buildButtonColumn(color, Icons.near_me, 'ROUTE'),
-        _buildButtonColumn(color, Icons.share, 'SHARE'),
-      ],
-    );
-
-    Widget textSection = const Padding(
-      padding: EdgeInsets.all(32),
-      child: Text(
-        'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
-        'Alps. Situated 1,578 meters above sea level, it is one of the '
-        'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
-        'half-hour walk through pastures and pine forest, leads you to the '
-        'lake, which warms to 20 degrees Celsius in the summer. Activities '
-        'enjoyed here include rowing, and riding the summer toboggan run.',
-        softWrap: true,
-      ),
-    );
-
     return MaterialApp(
-      title: 'Flutter layout demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter loyout demo'),
+      title: Constants.APP_NAME,
+      initialRoute: Constants.HOME_PATH,
+      routes: {
+        Constants.HOME_PATH: ((context) => SplashScreen()),
+        Constants.AUTH_PATH: ((context) => AuthSelect()),
+        Constants.JOB_LIST_PATH: (context) => const JobList(
+              items: []),
+        Constants.JOB_DETAILS_PATH: (context) => JobDetails()
+      },
+      theme: ThemeData(
+        primaryColor: const Color(Constants.PRIMARY_COLOR),
+        secondaryHeaderColor: const Color(Constants.SECONDARY_COLOR),
+        backgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          toolbarHeight: 65,
+          titleSpacing: 16,
+          iconTheme:
+              IconThemeData(color: Color(Constants.SECONDARY_COLOR), size: 30),
         ),
-        body: ListView(
-          children: [
-            Image.asset(
-              'images/lake.jpg',
-              width: 600,
-              height: 240,
-              fit: BoxFit.cover
+        textTheme: const TextTheme(
+            headlineLarge: TextStyle(
+              fontSize: 32,
+              color: Color(Constants.SECONDARY_COLOR),
+              fontWeight: FontWeight.w800,
             ),
-            titleSection,
-            buttonSection,
-            textSection
-          ],
-        )
-      )
+            headline1: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w900,
+                color: Color(Constants.SECONDARY_COLOR)),
+            headline2: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w800,
+                color: Color(Constants.SECONDARY_COLOR)),
+            headline3: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w900,
+                color: Color(Constants.SECONDARY_COLOR)),
+            headline4: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w900,
+                color: Color(Constants.PRIMARY_COLOR)),
+            caption: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w900,
+                color: Color(Constants.SECONDARY_COLOR)),
+            bodyText2: TextStyle(fontSize: 14),
+            subtitle1: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
+                color: Color(Constants.MUTED_TEXT_COLOR))),
+        // Horizontal sliding transitions for routes
+        pageTransitionsTheme: const PageTransitionsTheme(builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        }),
+        //Button style
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 55),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 16),
+                shape: RoundedRectangleBorder(                    
+                    borderRadius: BorderRadius.circular(12)),
+                primary: const Color(Constants.PRIMARY_COLOR), // background color
+                textStyle: const TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.w700))),
+      ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
